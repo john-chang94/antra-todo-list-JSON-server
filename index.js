@@ -145,12 +145,12 @@ const addEditHandler = (id) => {
 };
 
 const addPatchHandler = (id) => {
-  getTodo(id).then((data) => {
     const todo = document.getElementById(`todo-text-${id}`);
     todo.addEventListener("click", (e) => {
-      patchTodo(!data.completed, id).then((data) => fetchData());
+        getTodo(id).then(data => {
+            patchTodo(!data.completed, id).then((data) => fetchData());
+        })
     });
-  });
 };
 
 const addDeleteHandler = (id) => {
@@ -182,6 +182,13 @@ const fetchData = () => {
       addDeleteHandler(todo.id);
     });
   });
+
+  if (todosContainer.children.length === 0) {
+    const noneText = document.createElement("P");
+    noneText.className = "paragraph__none";
+    noneText.innerHTML = "no active tasks";
+    todosContainer.appendChild(noneText);
+  }
 };
 
 const container = renderContainer();
