@@ -15,3 +15,82 @@ body {
     align-items: center;
     height: 100vh;
 }
+
+#root {
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    padding: 0 12%;
+}
+
+.input__wrapper {
+    padding: 10px;
+}
+
+#todo-input {
+    height: 35px;
+}
+
+.button__submit {
+    background-color: #008cba;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 3px;
+}
+
+.todo__paragraph {
+    font-size: 2rem;
+}
+
+article {
+    background-color: #e6e2d3;
+    border-radius: 5px;
+    margin: 15px 0;
+    padding: 10px;
+}
+
+.todo__completed {
+    text-decoration: line-through;
+}
+
+.button {
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 5px;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.blue {
+    background-color: #008cba;
+}
+
+.red {
+    background-color: #c94c4c;
+}
+
+.white {
+    color: white;
+}
