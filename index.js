@@ -93,9 +93,10 @@ const handleSubmit = () => {
   let todoInput = document.getElementById("todo-input");
   addTodo(todoInput.value).then((data) => {
     fetchData();
-    // todoInput.innerHTML = "";
+    todoInput.innerHTML = "";
   });
 };
+
 // const addSubmitHandler = (id) => {
 //     const todoInput = document.getElementById("todo-input").value;
 
@@ -145,12 +146,12 @@ const addEditHandler = (id) => {
 };
 
 const addPatchHandler = (id) => {
-    const todo = document.getElementById(`todo-text-${id}`);
-    todo.addEventListener("click", (e) => {
-        getTodo(id).then(data => {
-            patchTodo(!data.completed, id).then((data) => fetchData());
-        })
+  const todo = document.getElementById(`todo-text-${id}`);
+  todo.addEventListener("click", (e) => {
+    getTodo(id).then((data) => {
+      patchTodo(!data.completed, id).then((data) => fetchData());
     });
+  });
 };
 
 const addDeleteHandler = (id) => {
@@ -166,6 +167,14 @@ const fetchData = () => {
   todosContainer.innerHTML = "";
 
   getTodos().then((data) => {
+    if (data.length === 0) {
+      const noneText = document.createElement("P");
+      noneText.className = "paragraph__none";
+      noneText.innerHTML = "no active tasks";
+      todosContainer.appendChild(noneText);
+      return;
+    }
+
     data.map((todo) => {
       const todoNode = document.createElement("article");
       todoNode.id = `todo-${todo.id}`;
@@ -174,7 +183,6 @@ const fetchData = () => {
       const todoCard = renderTodo(todo);
       todoNode.innerHTML = todoCard;
 
-      //   const todosContainer = document.querySelector(".todos");
       todosContainer.appendChild(todoNode);
 
       addEditHandler(todo.id);
@@ -182,13 +190,6 @@ const fetchData = () => {
       addDeleteHandler(todo.id);
     });
   });
-
-  if (todosContainer.children.length === 0) {
-    const noneText = document.createElement("P");
-    noneText.className = "paragraph__none";
-    noneText.innerHTML = "no active tasks";
-    todosContainer.appendChild(noneText);
-  }
 };
 
 const container = renderContainer();
