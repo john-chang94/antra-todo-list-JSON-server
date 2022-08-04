@@ -1,6 +1,7 @@
 // CONSTS
 const BASE_URL = "http://localhost:3000";
 const TODOS_PATH = "todos";
+let todos;
 
 // API
 const getTodos = () => {
@@ -62,14 +63,17 @@ const renderContainer = () => `
     <div class="container">
         <div class="input__wrapper flex flex-center">
             <input type="text" id="todo-input" class="text-input" />
-            <button class="button__submit" onclick="handleSubmit()">submit</submit>
+            <button class="button__submit" onclick="handleSubmit()">submit</button>
+            <button class="button__submit" onclick="handleClear()">clear</button>
         </div>
-        <section class="todos"></section>
+        <section class="todos flex flex-col">
+          
+        </section>
     </div>
 `;
 
 const renderTodo = (todo) => `
-    <p id="todo-text-${todo.id}" class="todo__paragraph ${todo.completed && "todo__completed"}">
+    <p id="todo-text-${todo.id}" class="todo__paragraph">
         ${todo.title}
     </p>
     <div>
@@ -97,18 +101,35 @@ const handleSubmit = () => {
   });
 };
 
-const addSubmitHandler = () => {
-    const todoInputValue = document.getElementById("todo-input").value;
-    const btn = document.querySelector(".button__submit");
-    
-    btn.addEventListener("click", (e) => {
-      console.log(todoInputValue)
-        addTodo(todoInputValue).then((data) => {
-          fetchData();
-          todoInputValue.innerHTML = "";
-        })
-    })
+const handleClear = () => {
+  for (let todo of todos) {
+    if (todo.completed) {
+      patchTodo(!todo.completed, todo.id);
+    }
+  }
+  fetchData();
+  // const todos = document.querySelector(".todos");
+  // for (let item of todos.childNodes) {
+  //   if (item.firstElementChild.classList.includes("todo__completed")) {
+  //     // get id of current element
+  //     // run the patchTodo(id)
+  //   }
+  // }
+  // // run fetchData()
 }
+
+// const addSubmitHandler = () => {
+//     const todoInputValue = document.getElementById("todo-input").value;
+//     const btn = document.querySelector(".button__submit");
+    
+//     btn.addEventListener("click", (e) => {
+//       console.log(todoInputValue)
+//         addTodo(todoInputValue).then((data) => {
+//           fetchData();
+//           todoInputValue.innerHTML = "";
+//         })
+//     })
+// }
 
 const addEditHandler = (id) => {
   const todo = document.getElementById(`todo-${id}`);
@@ -183,7 +204,8 @@ const fetchData = () => {
     data.map((todo) => {
       const todoNode = document.createElement("article");
       todoNode.id = `todo-${todo.id}`;
-      todoNode.className = "flex space-between align-center";
+      // complete todo will move to bottom of list
+      todoNode.className = `flex space-between align-center ${todo.completed && "todo__completed"}`;
 
       const todoCard = renderTodo(todo);
       todoNode.innerHTML = todoCard;
@@ -195,6 +217,8 @@ const fetchData = () => {
       addPatchHandler(todo.id);
       addDeleteHandler(todo.id);
     });
+
+    todos = data;
   });
 };
 

@@ -68,6 +68,10 @@ article {
 }
 
 .todo__completed {
+    order: 2
+}
+
+.todo__completed p {
     text-decoration: line-through;
 }
 
@@ -88,6 +92,10 @@ article {
 
 .flex {
     display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
 }
 
 .flex-center {
