@@ -104,7 +104,8 @@ const handleSubmit = () => {
 const handleClear = () => {
   for (let todo of todos) {
     if (todo.completed) {
-      patchTodo(!todo.completed, todo.id);
+      // patchTodo(!todo.completed, todo.id);
+      deleteTodo(todo.id);
     }
   }
   fetchData();
