@@ -29,7 +29,7 @@ body {
     padding: 10px;
 }
 
-#todo-input {
+.text-input {
     height: 38px;
     width: 250px;
     border-radius: 5px;

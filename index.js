@@ -61,7 +61,7 @@ const deleteTodo = (id) => {
 const renderContainer = () => `
     <div class="container">
         <div class="input__wrapper flex flex-center">
-            <input type="text" id="todo-input" />
+            <input type="text" id="todo-input" class="text-input" />
             <button class="button__submit" onclick="handleSubmit()">submit</submit>
         </div>
         <section class="todos"></section>
@@ -90,21 +90,25 @@ const renderTodo = (todo) => `
 
 // EVENTS
 const handleSubmit = () => {
-  let todoInput = document.getElementById("todo-input");
+  const todoInput = document.getElementById("todo-input");
   addTodo(todoInput.value).then((data) => {
     fetchData();
     todoInput.innerHTML = "";
   });
 };
 
-// const addSubmitHandler = (id) => {
-//     const todoInput = document.getElementById("todo-input").value;
-
-//     const btn = document.querySelector(".button__submit");
-//     btn.addEventListener("click", (e) => {
-//         console.log(e.target)
-//     })
-// }
+const addSubmitHandler = () => {
+    const todoInputValue = document.getElementById("todo-input").value;
+    const btn = document.querySelector(".button__submit");
+    
+    btn.addEventListener("click", (e) => {
+      console.log(todoInputValue)
+        addTodo(todoInputValue).then((data) => {
+          fetchData();
+          todoInputValue.innerHTML = "";
+        })
+    })
+}
 
 const addEditHandler = (id) => {
   const todo = document.getElementById(`todo-${id}`);
@@ -119,6 +123,7 @@ const addEditHandler = (id) => {
       // create text input with required values
       const editInput = document.createElement("INPUT");
       editInput.id = "edit-input";
+      editInput.className = "text-input"
       editInput.value = todoText.innerHTML;
 
       // replace p tag with temp text input
@@ -185,6 +190,7 @@ const fetchData = () => {
 
       todosContainer.appendChild(todoNode);
 
+      // addSubmitHandler();
       addEditHandler(todo.id);
       addPatchHandler(todo.id);
       addDeleteHandler(todo.id);
